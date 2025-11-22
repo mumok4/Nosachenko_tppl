@@ -1,0 +1,58 @@
+local Interpreter = require("src.interpreter")
+
+describe("COW Interpreter", function()
+    
+    it("should handle arithmetic MoO MOo", function()
+        local vm = Interpreter.new()
+        vm:run("MoO MoO")
+        assert.are.equal(2, vm.memory[0])
+        vm:run("MOo")
+        assert.are.equal(1, vm.memory[0])
+    end)
+
+    it("should handle pointer movement moO mOo", function()
+        local vm = Interpreter.new()
+        vm:run("moO MoO mOo")
+        assert.are.equal(1, vm.memory[1])
+        assert.are.equal(0, vm.memory[0])
+    end)
+
+    it("should handle loops moo MOO", function()
+        local vm = Interpreter.new()
+        vm:run("MoO MoO moo MOo MOO")
+        assert.are.equal(0, vm.memory[0])
+    end)
+
+    it("should handle OOO zeroing", function()
+        local vm = Interpreter.new()
+        vm:run("MoO OOO")
+        assert.are.equal(0, vm.memory[0])
+    end)
+
+    it("should handle mOO indirect execution", function()
+        local vm = Interpreter.new()
+        vm:run("MoO MoO mOO") 
+        assert.are.equal(1, vm.ptr)
+    end)
+
+    it("should handle Moo IO", function()
+        local vm = Interpreter.new()
+        vm:run("Moo", {"A"}) 
+        assert.are.equal(65, vm.memory[0])
+        
+        local vm2 = Interpreter.new()
+        local out = vm2:run("MoO Moo")
+        assert.are.equal(string.char(1), out)
+    end)
+    
+    it("should handle oom number input", function()
+        local vm = Interpreter.new()
+        vm:run("oom", {"123"})
+        assert.are.equal(123, vm.memory[0])
+    end)
+
+    it("should error on unmatched loops", function()
+        local vm = Interpreter.new()
+        assert.has_error(function() vm:run("moo") end)
+    end)
+end)
