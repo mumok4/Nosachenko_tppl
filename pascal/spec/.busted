@@ -1,0 +1,4 @@
+return {
+    lua_path = './pascal/?.lua;',
+    coverage = true,
+}

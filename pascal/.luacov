@@ -1,0 +1,14 @@
+rock_modules = false
+
+include = {
+   "pascal"
+}
+
+exclude = {
+   "spec",
+   "/usr/share/lua",
+   "/usr/local/share/lua"
+}
+
+reporter = "html"
+reportfile = "luacov.report.html"
