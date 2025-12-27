@@ -1,0 +1,6 @@
+run_after_tests = true
+reporter = "html"
+reportfile = "luacov.html"
+modules = {
+    ["collector"] = "collector.lua"
+}
